@@ -225,12 +225,12 @@ public class RadosFileSystem extends FileSystem {
       }      
     }
     return new FSDataOutputStream
-        (new RadosOutputStream(store, makeAbsolute(file).toString()));
+        (new RadosHDFSOutputStream(store, makeAbsolute(file).toString()));
   }
 
   @Override
   public FSDataInputStream open(Path path, int bufferSize) throws IOException {
-      return new FSDataInputStream(new RadosInputStream(store, path.toString()));
+      return new FSDataInputStream(new RadosHDFSInputStream(store, path.toString()));
   }
 
   @Override

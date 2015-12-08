@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,8 +23,6 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.ceph.rados.fs.INode.FileType;
 import com.ceph.rados.jna.RadosObjectInfo;
 import com.ceph.rados.IoCTX;
 import com.ceph.rados.Rados;
@@ -36,22 +34,15 @@ public class RadosOutputStream extends OutputStream {
     private String oid;
     private long pos = 0;
 
-    private static final Log LOG = 
-        LogFactory.getLog(RadosOutputStream.class.getName());
-    
-    
+    private static final Log LOG =
+            LogFactory.getLog(RadosOutputStream.class.getName());
+
+
     public RadosOutputStream(IoCTX io, String id) {
         ioctx = io;
         oid = id;
         closed = false;
     }
-
-    public RadosOutputStream(RadosFileSystemStore store, String id) {
-        ioctx = store.getIoCTX();
-        oid = id;
-        closed = false;
-    }
-
 
     @Override
     public synchronized void write(int b) throws IOException {
@@ -61,7 +52,7 @@ public class RadosOutputStream extends OutputStream {
         byte[] buf = new byte[4];
         try {
             ioctx.write(oid, buf, pos);
-            pos ++;
+            pos++;
         } catch (Exception e) {
             throw new IOException("write failed");
         }

@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,16 +18,12 @@
 
 package com.ceph.rados.fs;
 
-import java.io.InputStream;
-import java.io.IOException;
-
+import com.ceph.rados.IoCTX;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.ceph.rados.fs.INode.FileType;
-import com.ceph.rados.jna.RadosObjectInfo;
-import com.ceph.rados.IoCTX;
-import com.ceph.rados.Rados;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class RadosInputStream extends InputStream {
 
@@ -37,18 +33,12 @@ public class RadosInputStream extends InputStream {
     private long pos = 0;
     private String oid;
 
-    private static final Log LOG = 
-        LogFactory.getLog(RadosInputStream.class.getName());
-    
-    
+    private static final Log LOG =
+            LogFactory.getLog(RadosInputStream.class.getName());
+
+
     public RadosInputStream(IoCTX io, String id) {
         ioctx = io;
-        oid = id;
-        closed = false;
-    }
-
-    public RadosInputStream(RadosFileSystemStore store, String id) {
-        ioctx = store.getIoCTX();
         oid = id;
         closed = false;
     }
@@ -60,7 +50,7 @@ public class RadosInputStream extends InputStream {
     @Override
     public synchronized int available() throws IOException {
         try {
-            if (size < 0 ) {
+            if (size < 0) {
                 size = ioctx.stat(oid).getSize();
             }
             return (int) (size - pos);
@@ -75,7 +65,7 @@ public class RadosInputStream extends InputStream {
             throw new IOException("Stream closed");
         }
         try {
-            if (size < 0 ) {
+            if (size < 0) {
                 size = ioctx.stat(oid).getSize();
             }
         } catch (Exception e) {
@@ -85,7 +75,7 @@ public class RadosInputStream extends InputStream {
         try {
             int read = ioctx.read(oid, 1, pos, buf);
             if (read > 0)
-                pos ++;
+                pos++;
             return buf[0];
         } catch (Exception e) {
             throw new IOException("read failed");

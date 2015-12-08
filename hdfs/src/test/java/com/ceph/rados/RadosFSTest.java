@@ -17,7 +17,7 @@
  * language governing permissions and limitations under the License.
  */
 
-package com.ceph.rados.fs;
+package com.ceph.rados;
 
 import java.io.IOException;
 import java.util.Set;
@@ -25,6 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
 import java.io.ByteArrayInputStream;
+
+import com.ceph.rados.fs.Block;
+import com.ceph.rados.fs.INode;
+import com.ceph.rados.fs.INode.FileType;
+import com.ceph.rados.fs.RadosFileSystemStore;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -36,7 +41,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.apache.hadoop.fs.Path;
-import com.ceph.rados.fs.INode.FileType;
 public final class RadosFSTest {
 
     private static String ENV_CONFIG_FILE = System.getenv("RADOS_JAVA_CONFIG_FILE");
